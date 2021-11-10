@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <span id="money">1000</span>원 보유 <br>
+        <input type="number" id="bet">
+        <div id="choose">
+            <button id="hol">홀</button>
+            <button id="zzak">짝</button>
+        </div>
+        <span id="result"></span>
+    </div>
+</body>
+
+<script>
+    let $result = document.querySelector('#result');
+    let $money = document.querySelector('#money');
+
+    let money = 1000;
+    $money.value = money;
+
+    const check = function (guess) {
+        let $bet = document.querySelector('input');
+
+        let answer = parseInt(Math.random()*10/5);
+        let bet = parseInt($bet.value);
+
+        if(money < bet) {
+            $result.textContent = "금액이 부족합니다.";
+        }
+
+        else if(bet <= 0) {
+            $result.textContent = "잘못 입력하였습니다.";
+        }
+
+        else if(parseInt(money) <= 0) {
+            $result.textContent = "파산";
+            money = 0;
+        }
+
+        else if(money >= bet) {
+            money = money - bet;
+
+            if(answer == guess) {
+                $result.textContent = "정답";
+                money = money + bet * 2;
+        } else {
+            $result.textContent = "오답";
+        }
+        $money.textContent = parseInt(money);
+        }
+    }
+
+    let $hol = document.querySelector('#hol').addEventListener('click', () => {
+        check(0);
+    });
+    let $zzak = document.querySelector('#zzak').addEventListener('click', () => {
+        check(1);
+    });
+</script>
+
+</html>
